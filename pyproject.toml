@@ -1,0 +1,17 @@
+[project]
+name = "softdesk-support"
+version = "0.1.0"
+description = "API REST pour le suivi de problèmes techniques"
+authors = [
+    {name = "Myriam Desporte",email = "myriam.desporte@gmail.com"}
+]
+requires-python = ">=3.14"
+dependencies = [
+    "django (>=6.0.3,<7.0.0)",
+    "djangorestframework (>=3.16.1,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
