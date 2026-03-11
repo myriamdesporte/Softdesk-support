@@ -17,10 +17,11 @@ class User(AbstractUser):
     @property
     def age(self):
         """Calculate user's age from date of birth."""
-        if self.date_of_birth:
-            today = date.today()
-            birth_date = self.date_of_birth
-            return today.year - birth_date.year - (
-                    (today.month, today.day) < (birth_date.month, birth_date.day)
-            )
-        return None
+        if self.date_of_birth is None:
+            return None
+
+        today = date.today()
+        birth_date = self.date_of_birth
+        return today.year - birth_date.year - (
+                (today.month, today.day) < (birth_date.month, birth_date.day)
+        )
