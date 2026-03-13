@@ -10,6 +10,15 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     readonly_fields = ('created_time',)
 
+    def save_model(self, request, obj, form, change):
+        """
+        Automatically add the author as a contributor when creating a project.
+        """
+        super().save_model(request, obj, form, change)
+
+        if not change:
+            Contributor.objects.get_or_create(user=obj.author, project=obj)
+
 
 @admin.register(Contributor)
 class ContributorAdmin(admin.ModelAdmin):
