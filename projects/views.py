@@ -11,6 +11,14 @@ class ProjectViewSet(ModelViewSet):
     def get_queryset(self):
         return Project.objects.all()
 
+    def perform_create(self, serializer):
+        """
+        Set the author to the current user when creating a project.
+        Automatically add the author as a contributor.
+        """
+        project = serializer.save(author=self.request.user)
+        Contributor.objects.create(user=self.request.user, project=project)
+
 
 class ContributorViewSet(ModelViewSet):
     """
