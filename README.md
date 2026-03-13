@@ -65,17 +65,37 @@ L'interface d'administration est accessible sur : **http://127.0.0.1:8000/admin/
 
 ### Utilisateurs
 
-| Méthode     | Endpoint         | Description |
-|-------------|------------------|-------------|
-| POST        | `/api/user/`     | Créer un utilisateur (signup) |
-| GET         | `/api/user/`     | Lister tous les utilisateurs |
-| GET         | `/api/user/{id}/` | Détails d'un utilisateur |
-| PUT / PATCH | `/api/user/{id}/` | Modifier un utilisateur |
-| DELETE      | `/api/user/{id}/` | Supprimer un utilisateur |
+| Méthode     | Endpoint           | Description |
+|-------------|--------------------|-------------|
+| GET         | `/api/users/`      | Lister tous les utilisateurs |
+| POST        | `/api/users/`      | Créer un utilisateur |
+| GET         | `/api/users/{id}/` | Détails d'un utilisateur |
+| PUT / PATCH | `/api/users/{id}/` | Modifier un utilisateur |
+| DELETE      | `/api/users/{id}/` | Supprimer un utilisateur |
+
+### Projets
+
+| Méthode     | Endpoint | Description |
+|-------------|----------|-------------|
+| GET         | `/api/projects/` | Lister tous les projets |
+| POST        | `/api/projects/` | Créer un projet |
+| GET         | `/api/projects/{id}/` | Détails d'un projet |
+| PUT / PATCH | `/api/projects/{id}/` | Modifier un projet |
+| DELETE      | `/api/projects/{id}/` | Supprimer un projet |
+
+### Contributeurs
+
+| Méthode     | Endpoint                  | Description                         |
+|-------------|---------------------------|-------------------------------------|
+| GET         | `/api/contributors/`      | Lister tous les contributeurs       |
+| POST        | `/api/contributors/`      | Ajouter un contributeur à un projet |
+| GET         | `/api/contributors/{id}/` | Détails d'un contributeur           |
+| PUT / PATCH | `/api/contributors/{id}/` | Modifier un contributeur            |
+| DELETE      | `/api/contributors/{id}/` | Retirer un contributeur d'un projet |
 
 ### Exemple de requête (création d'utilisateur)
 ```
-POST http://127.0.0.1:8000/api/user/
+POST http://127.0.0.1:8000/api/users/
 
 {
     "username": "alice",
