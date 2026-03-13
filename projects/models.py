@@ -25,3 +25,27 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Contributor(models.Model):
+    """
+    Association table linking users and projects.
+    Represents the many-to-many relationship between User and Project.
+    """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='contributions'
+    )
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='contributors'
+    )
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'project')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.project.name}"
