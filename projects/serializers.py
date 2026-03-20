@@ -34,7 +34,7 @@ class ContributorSerializer(serializers.ModelSerializer):
             'project_name',
             'created_time',
         ]
-        read_only_fields = ['id', 'created_time']
+        read_only_fields = ['id', 'project', 'created_time']
 
 
 class IssueSerializer(serializers.ModelSerializer):
