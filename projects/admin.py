@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Contributor
+from .models import Project, Contributor, Issue, Comment
 
 
 @admin.register(Project)
@@ -27,3 +27,21 @@ class ContributorAdmin(admin.ModelAdmin):
     list_filter = ('created_time',)
     search_fields = ('user__username', 'project__name')
     readonly_fields = ('created_time',)
+
+
+@admin.register(Issue)
+class IssueAdmin(admin.ModelAdmin):
+    """Admin for Issue model."""
+    list_display = ('title', 'project', 'priority', 'tag', 'status', 'author', 'assignee', 'created_time')
+    list_filter = ('priority', 'tag', 'status', 'created_time')
+    search_fields = ('title', 'description', 'project__name')
+    readonly_fields = ('created_time',)
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    """Admin for Comment model."""
+    list_display = ('uuid', 'issue', 'author', 'created_time')
+    list_filter = ('created_time',)
+    search_fields = ('description', 'issue__title', 'author__username')
+    readonly_fields = ('uuid', 'created_time')
