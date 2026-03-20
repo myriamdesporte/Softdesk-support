@@ -92,6 +92,27 @@ L'interface d'administration est accessible sur : **http://127.0.0.1:8000/admin/
 | GET       | `/api/projects/{project_id}/contributors/{id}/` | Détails d'un contributeur          |
 | DELETE    | `/api/projects/{project_id}/contributors/{id}/` | Retirer un contributeur d'un projet |
 
+### Issues
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/api/projects/{project_id}/issues/` | Lister les issues d'un projet |
+| POST | `/api/projects/{project_id}/issues/` | Créer une issue dans un projet |
+| GET | `/api/projects/{project_id}/issues/{id}/` | Détails d'une issue |
+| PUT | `/api/projects/{project_id}/issues/{id}/` | Modifier une issue |
+| DELETE | `/api/projects/{project_id}/issues/{id}/` | Supprimer une issue |
+
+### Commentaires
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/api/projects/{project_id}/issues/{issue_id}/comments/` | Lister les commentaires d'une issue |
+| POST | `/api/projects/{project_id}/issues/{issue_id}/comments/` | Créer un commentaire sur une issue |
+| GET | `/api/projects/{project_id}/issues/{issue_id}/comments/{id}/` | Détails d'un commentaire |
+| PUT | `/api/projects/{project_id}/issues/{issue_id}/comments/{id}/` | Modifier un commentaire |
+| DELETE | `/api/projects/{project_id}/issues/{issue_id}/comments/{id}/` | Supprimer un commentaire |
+
+
 ### Exemple de requête (création d'utilisateur)
 ```
 POST http://127.0.0.1:8000/api/users/
