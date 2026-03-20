@@ -96,7 +96,18 @@ files = [
     {file = "tzdata-2025.3.tar.gz", hash = "sha256:de39c2ca5dc7b0344f2eba86f49d614019d29f060fc4ebc8a417896a620b56a7"},
 ]
 
+[[package]]
+name = "uuid"
+version = "1.30"
+description = "UUID object and generation functions (Python 2.3 or higher)"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "uuid-1.30.tar.gz", hash = "sha256:1f87cc004ac5120466f36c5beae48b4c48cc411968eed0eaecd3da82aa96193f"},
+]
+
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14"
-content-hash = "c50f54793bb44e8c309d63771cf0d3e8d7829e27b686357dc8494cd2761310fa"
+content-hash = "a09234148ace9c3e6ffce39fcc0748bd14c2eec5307a7a821db3d1a7eb91160a"
