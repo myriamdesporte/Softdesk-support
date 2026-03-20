@@ -21,10 +21,20 @@ class ProjectViewSet(ModelViewSet):
 
 
 class ContributorViewSet(ModelViewSet):
-    """
-    ViewSet for Contributor model.
-    """
+    """ViewSet for Contributor model."""
     serializer_class = ContributorSerializer
 
     def get_queryset(self):
+        """Filter contributors by project."""
+        project_id = self.kwargs.get('project_pk')
+        if project_id:
+            return Contributor.objects.filter(project_id=project_id)
         return Contributor.objects.all()
+
+    def perform_create(self, serializer):
+        """Automatically set the project from URL."""
+        project_id = self.kwargs.get('project_pk')
+        if project_id:
+            serializer.save(project_id=project_id)
+        else:
+            serializer.save()
