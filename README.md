@@ -85,13 +85,12 @@ L'interface d'administration est accessible sur : **http://127.0.0.1:8000/admin/
 
 ### Contributeurs
 
-| Méthode     | Endpoint                  | Description                         |
-|-------------|---------------------------|-------------------------------------|
-| GET         | `/api/contributors/`      | Lister tous les contributeurs       |
-| POST        | `/api/contributors/`      | Ajouter un contributeur à un projet |
-| GET         | `/api/contributors/{id}/` | Détails d'un contributeur           |
-| PUT / PATCH | `/api/contributors/{id}/` | Modifier un contributeur            |
-| DELETE      | `/api/contributors/{id}/` | Retirer un contributeur d'un projet |
+| Méthode   | Endpoint | Description                        |
+|-----------|----------|------------------------------------|
+| GET       | `/api/projects/{project_id}/contributors/` | Lister les contributeurs d'un projet |
+| POST      | `/api/projects/{project_id}/contributors/` | Ajouter un contributeur à un projet |
+| GET       | `/api/projects/{project_id}/contributors/{id}/` | Détails d'un contributeur          |
+| DELETE    | `/api/projects/{project_id}/contributors/{id}/` | Retirer un contributeur d'un projet |
 
 ### Exemple de requête (création d'utilisateur)
 ```
