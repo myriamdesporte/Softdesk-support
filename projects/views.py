@@ -1,15 +1,18 @@
 from rest_framework.viewsets import ModelViewSet
-
-from projects.models import Project, Contributor, Issue, Comment
-from projects.serializers import ProjectSerializer, ContributorSerializer, IssueSerializer, CommentSerializer
+from rest_framework.permissions import IsAuthenticated
+from .models import Project, Contributor, Issue, Comment
+from .serializers import ProjectSerializer, ContributorSerializer, IssueSerializer, CommentSerializer
+from .permissions import IsAuthor, IsProjectContributor
 
 
 class ProjectViewSet(ModelViewSet):
     """ViewSet for Project model."""
     serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated, IsAuthor]
 
     def get_queryset(self):
-        return Project.objects.all()
+        """Return only projects where user is a contributor or author."""
+        return Project.objects.filter(contributors__user=self.request.user).distinct()
 
     def perform_create(self, serializer):
         """
@@ -23,58 +26,55 @@ class ProjectViewSet(ModelViewSet):
 class ContributorViewSet(ModelViewSet):
     """ViewSet for Contributor model."""
     serializer_class = ContributorSerializer
+    permission_classes = [IsAuthenticated, IsProjectContributor]
 
     def get_queryset(self):
         """Filter contributors by project."""
         project_id = self.kwargs.get('project_pk')
         if project_id:
             return Contributor.objects.filter(project_id=project_id)
-        return Contributor.objects.all()
+        return Contributor.objects.none()
 
     def perform_create(self, serializer):
         """Automatically set the project from URL."""
         project_id = self.kwargs.get('project_pk')
         if project_id:
             serializer.save(project_id=project_id)
-        else:
-            serializer.save()
 
 
 class IssueViewSet(ModelViewSet):
     """ViewSet for Issue model."""
     serializer_class = IssueSerializer
+    permission_classes = [IsAuthenticated, IsProjectContributor, IsAuthor]
 
     def get_queryset(self):
-        """Return only issues belonging to the project in the URL."""
+        """Filter issues by project."""
         project_id = self.kwargs.get('project_pk')
         if project_id:
             return Issue.objects.filter(project_id=project_id)
-        return Issue.objects.all()
+        return Issue.objects.none()
 
     def perform_create(self, serializer):
         """Set the author and project when creating an issue."""
         project_id = self.kwargs.get('project_pk')
         if project_id:
             serializer.save(author=self.request.user, project_id=project_id)
-        else:
-            serializer.save(author=self.request.user)
 
 
 class CommentViewSet(ModelViewSet):
     """ViewSet for Comment model."""
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated, IsProjectContributor, IsAuthor]
 
     def get_queryset(self):
-        """Return only comments belonging to the issue in the URL"""
+        """Filter comments by issue."""
         issue_id = self.kwargs.get('issue_pk')
         if issue_id:
             return Comment.objects.filter(issue_id=issue_id)
-        return Comment.objects.all()
+        return Comment.objects.none()
 
     def perform_create(self, serializer):
         """Set the author and issue when creating a comment."""
         issue_id = self.kwargs.get('issue_pk')
         if issue_id:
             serializer.save(author=self.request.user, issue_id=issue_id)
-        else:
-            serializer.save(author=self.request.user)
