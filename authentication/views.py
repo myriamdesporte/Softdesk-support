@@ -21,8 +21,8 @@ class UserViewSet(ModelViewSet):
         Allow anyone to create an account.
         Other actions require authentication.
         """
-        if self.action == 'create':
+        if self.action == "create":
             return [AllowAny()]
-        if self.action in ['update', 'partial_update', 'destroy']:
+        if self.action in ["update", "partial_update", "destroy"]:
             return [IsAuthenticated(), IsOwner()]
         return [IsAuthenticated()]

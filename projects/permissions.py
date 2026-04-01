@@ -27,11 +27,10 @@ class IsProjectContributor(BasePermission):
 
     def has_permission(self, request, view):
         """Check if user is contributor of the project."""
-        project_id = view.kwargs.get('project_pk')
+        project_id = view.kwargs.get("project_pk")
         if not project_id:
             return True
 
         return Contributor.objects.filter(
-            project_id=project_id,
-            user=request.user
+            project_id=project_id, user=request.user
         ).exists()

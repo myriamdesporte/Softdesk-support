@@ -7,11 +7,12 @@ class Project(models.Model):
     """
     Software project.
     """
+
     TYPE_CHOICES = [
-        ('back-end', 'Back-end'),
-        ('front-end', 'Front-end'),
-        ('iOS', 'iOS'),
-        ('Android', 'Android'),
+        ("back-end", "Back-end"),
+        ("front-end", "Front-end"),
+        ("iOS", "iOS"),
+        ("Android", "Android"),
     ]
 
     name = models.CharField(max_length=128)
@@ -20,7 +21,7 @@ class Project(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='authored_projects'
+        related_name="authored_projects",
     )
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -33,20 +34,17 @@ class Contributor(models.Model):
     Association table linking users and projects.
     Represents the many-to-many relationship between User and Project.
     """
+
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='contributions'
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="contributions"
     )
     project = models.ForeignKey(
-        Project,
-        on_delete=models.CASCADE,
-        related_name='contributors'
+        Project, on_delete=models.CASCADE, related_name="contributors"
     )
     created_time = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'project')
+        unique_together = ("user", "project")
 
     def __str__(self):
         return f"{self.user.username} - {self.project.name}"
@@ -54,45 +52,46 @@ class Contributor(models.Model):
 
 class Issue(models.Model):
     """A task or bug linked to a project."""
+
     PRIORITY_CHOICES = [
-        ('LOW', 'Low'),
-        ('MEDIUM', 'Medium'),
-        ('HIGH', 'High'),
+        ("LOW", "Low"),
+        ("MEDIUM", "Medium"),
+        ("HIGH", "High"),
     ]
 
     TAG_CHOICES = [
-        ('BUG', 'Bug'),
-        ('FEATURE', 'Feature'),
-        ('TASK', 'Task'),
+        ("BUG", "Bug"),
+        ("FEATURE", "Feature"),
+        ("TASK", "Task"),
     ]
 
     STATUS_CHOICES = [
-        ('To Do', 'To Do'),
-        ('In Progress', 'In Progress'),
-        ('Finished', 'Finished'),
+        ("To Do", "To Do"),
+        ("In Progress", "In Progress"),
+        ("Finished", "Finished"),
     ]
 
     title = models.CharField(max_length=256)
     description = models.TextField()
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='MEDIUM')
+    priority = models.CharField(
+        max_length=10, choices=PRIORITY_CHOICES, default="MEDIUM"
+    )
     tag = models.CharField(max_length=10, choices=TAG_CHOICES)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='To Do')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="To Do")
     project = models.ForeignKey(
-        Project,
-        on_delete=models.CASCADE,
-        related_name='issues'
+        Project, on_delete=models.CASCADE, related_name="issues"
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='authored_issues'
+        related_name="authored_issues",
     )
     assignee = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='assigned_issues'
+        related_name="assigned_issues",
     )
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -102,17 +101,12 @@ class Issue(models.Model):
 
 class Comment(models.Model):
     """A comment left on an issue."""
+
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     description = models.TextField()
-    issue = models.ForeignKey(
-        Issue,
-        on_delete=models.CASCADE,
-        related_name='comments'
-    )
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='comments'
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments"
     )
     created_time = models.DateTimeField(auto_now_add=True)
 

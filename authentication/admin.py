@@ -7,17 +7,26 @@ from .models import User
 class UserAdmin(BaseUserAdmin):
     """Custom admin for User model."""
 
-    list_display = ('username', 'email', 'age', 'can_be_contacted', 'can_data_be_shared', 'is_staff')
-    list_filter = ('is_staff', 'is_superuser', 'can_be_contacted', 'can_data_be_shared')
+    list_display = (
+        "username",
+        "email",
+        "age",
+        "can_be_contacted",
+        "can_data_be_shared",
+        "is_staff",
+    )
+    list_filter = ("is_staff", "is_superuser", "can_be_contacted", "can_data_be_shared")
 
     fieldsets = BaseUserAdmin.fieldsets + (
-        ('GDPR Information', {
-            'fields': ('date_of_birth', 'can_be_contacted', 'can_data_be_shared')
-        }),
+        (
+            "GDPR Information",
+            {"fields": ("date_of_birth", "can_be_contacted", "can_data_be_shared")},
+        ),
     )
 
     add_fieldsets = BaseUserAdmin.add_fieldsets + (
-        ('GDPR Information', {
-            'fields': ('date_of_birth', 'can_be_contacted', 'can_data_be_shared')
-        }),
+        (
+            "GDPR Information",
+            {"fields": ("date_of_birth", "can_be_contacted", "can_data_be_shared")},
+        ),
     )

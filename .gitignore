@@ -19,3 +19,6 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Flake8 reports
+flake8-report/
