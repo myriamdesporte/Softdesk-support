@@ -18,7 +18,11 @@ class ProjectViewSet(ModelViewSet):
 
     def get_queryset(self):
         """Return only projects where user is a contributor or author."""
-        return Project.objects.filter(contributors__user=self.request.user).select_related('author').distinct()
+        return (
+            Project.objects.filter(contributors__user=self.request.user)
+            .select_related("author")
+            .distinct()
+        )
 
     def perform_create(self, serializer):
         """
@@ -39,7 +43,9 @@ class ContributorViewSet(ModelViewSet):
         """Filter contributors by project."""
         project_id = self.kwargs.get("project_pk")
         if project_id:
-            return Contributor.objects.filter(project_id=project_id).select_related('user', 'project')
+            return Contributor.objects.filter(project_id=project_id).select_related(
+                "user", "project"
+            )
         return Contributor.objects.none()
 
     def perform_create(self, serializer):
@@ -59,7 +65,9 @@ class IssueViewSet(ModelViewSet):
         """Filter issues by project."""
         project_id = self.kwargs.get("project_pk")
         if project_id:
-            return Issue.objects.filter(project_id=project_id).select_related('author', 'assignee', 'project')
+            return Issue.objects.filter(project_id=project_id).select_related(
+                "author", "assignee", "project"
+            )
         return Issue.objects.none()
 
     def perform_create(self, serializer):
@@ -79,7 +87,9 @@ class CommentViewSet(ModelViewSet):
         """Filter comments by issue."""
         issue_id = self.kwargs.get("issue_pk")
         if issue_id:
-            return Comment.objects.filter(issue_id=issue_id).select_related('author', 'issue')
+            return Comment.objects.filter(issue_id=issue_id).select_related(
+                "author", "issue"
+            )
         return Comment.objects.none()
 
     def perform_create(self, serializer):
