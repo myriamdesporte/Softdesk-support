@@ -1,5 +1,5 @@
 [project]
-name = "softdesk-support"
+name = "softdesk"
 version = "0.1.0"
 description = "API REST pour le suivi de problèmes techniques"
 authors = [
@@ -10,13 +10,13 @@ dependencies = [
     "django (>=6.0.3,<7.0.0)",
     "djangorestframework (>=3.16.1,<4.0.0)",
     "drf-nested-routers (>=0.95.0,<0.96.0)",
-    "uuid (>=1.30,<2.0)",
     "djangorestframework-simplejwt (>=5.5.1,<6.0.0)",
-    "flake8 (>=7.3.0,<8.0.0)",
-    "black (>=26.3.1,<27.0.0)",
-    "flake8-html (>=0.4.3,<0.5.0)"
 ]
 
+[tool.poetry.group.dev.dependencies]
+flake8 = ">=7.3.0,<8.0.0"
+black = ">=26.3.1,<27.0.0"
+flake8-html = ">=0.4.3,<0.5.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -21,4 +21,4 @@ venv/
 Thumbs.db
 
 # Flake8 reports
-flake8-report/
+flake8_report/

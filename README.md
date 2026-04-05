@@ -36,7 +36,7 @@ cd Softdesk-support
 
 **2. Installer les dépendances**
 ```bash
-poetry install --no-root
+poetry install
 ```
 
 **3. Créer la base de données**
