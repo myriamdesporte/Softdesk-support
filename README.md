@@ -49,8 +49,6 @@ poetry run python manage.py migrate
 poetry run python manage.py createsuperuser
 ```
 
-Suivez les instructions (username, email, password).
-
 **5. Lancer le serveur de développement**
 ```bash
 poetry run python manage.py runserver
@@ -62,6 +60,13 @@ L'interface d'administration est accessible sur : **http://127.0.0.1:8000/admin/
 
 
 ## 📡 Endpoints API disponibles
+
+### Authentification
+
+| Méthode     | Endpoint             | Description                             |
+|-------------|----------------------|-----------------------------------------|
+| GET         | `/api/token/`        | Obtenir un token JWT (access + refresh) |
+| POST        | `/api/token/refresh` | Rafraîchir un token JWT                 |
 
 ### Utilisateurs
 
@@ -113,17 +118,56 @@ L'interface d'administration est accessible sur : **http://127.0.0.1:8000/admin/
 | DELETE | `/api/projects/{project_id}/issues/{issue_id}/comments/{id}/` | Supprimer un commentaire |
 
 
-### Exemple de requête (création d'utilisateur)
+### Utilisation de l'API
+
+Toutes les requêtes nécessitent une authentification JWT, **sauf la création d'un utilisateur** qui est le point 
+d'entrée de l'application.
+
+**Étape 1 : créer un utilisateur (aucune authentification requise)**
 ```
 POST http://127.0.0.1:8000/api/users/
+```
 
+Renseigner le **Body**: dans Postman, onglet **Body** -> **raw** -> **JSON**
+```json
 {
     "username": "alice",
     "email": "alice@example.com",
     "password": "SecurePass123!",
     "password2": "SecurePass123!",
-    "date_of_birth": "2000-05-15",
+    "date_of_birth": "2000-01-01",
     "can_be_contacted": true,
     "can_data_be_shared": false
 }
 ```
+
+**Étape 2 : Obtenir un token JWT`**
+```
+POST http://127.0.0.1:8000/api/token/
+```
+
+Renseigner le **Body**: dans Postman, onglet **Body** -> **raw** -> **JSON**
+```json
+{
+    "username": "alice",
+    "password": "SecurePass123!"
+}
+```
+
+La réponse contient un `access` token et un `refresh` token :
+
+```json
+{
+  "access": "eyJhbGciOiJIUzI1NiIs...",
+  "refresh": "eyJhbGciOiJIUzI1NiIs..." 
+}
+```
+
+**Étape 3 : S'authentifier sur les requêtes suivantes**
+
+Ajouter le token `access` dans le header `Authorization` de chaque requête :
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+```
+
+Dans Postman : onglet **Authorization** -> Type **Bearer Token** -> Coller le token `access`.
