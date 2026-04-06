@@ -59,14 +59,14 @@ class IssueSerializer(serializers.ModelSerializer):
     def validate_assignee(self, value):
         """Validate that assignee is a contributor of the project."""
         if value:
-            project = self.initial_data.get("project") if self.initial_data else None
-            if not project and self.instance:
-                project = self.instance.project.id
+            project_id = self.context["view"].kwargs.get("project_pk")
+            if not project_id and self.instance:
+                project_id = self.instance.project.id
 
             if (
-                project
+                project_id
                 and not Contributor.objects.filter(
-                    project_id=project, user=value
+                    project_id=project_id, user=value
                 ).exists()
             ):
                 raise serializers.ValidationError(
